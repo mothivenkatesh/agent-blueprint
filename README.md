@@ -103,6 +103,12 @@ flowchart LR
 The most-repeated lesson across every source: **default to the least autonomy that works.**
 One LLM step inside a deterministic workflow beats an autonomous agent until proven otherwise.
 
+**Picking a builder for that workflow or agent?** See the companion
+[**Agentic Workflow Builder Comparison**](https://mothivenkatesh.github.io/agentic-workflow-builder-comparison/) —
+a layered look at 9 tools (Activepieces, n8n, Dify, Flowise, Lyzr, CrewAI, LangGraph, Orkes,
+Temporal). It reaches the same conclusion as this playbook: **choose by layer first, not by
+feature checklist.**
+
 ## Agent architecture & types
 
 Classify the agent's production type, then blueprint its components.
@@ -256,6 +262,16 @@ references are refreshed.
 v0.2 — all 18 skills shipped (gates + section-writers + orchestrator + critic). Roadmap: a
 trigger-accuracy eval of the pack itself, hand-drawn diagram PNGs, and an npm installer for
 one-command cross-agent install.
+
+## Related & further reading
+
+`agent-blueprint` is one piece of a wider set of agentic + product tooling:
+
+- **[Agentic Workflow Builder Comparison](https://mothivenkatesh.github.io/agentic-workflow-builder-comparison/)** — the companion to this playbook. Once `agent-vs-workflow` tells you the build mode, this compares 9 builders by architectural layer (no-code platforms → frameworks → durable-execution engines).
+- **[MStack](https://github.com/mothivenkatesh/MStack)** — the Claude Code marketplace this method grew out of: agentic GTM, Growth, and Product skills (multiple plugins, 190+ skills).
+- **[lean-engineering-skills](https://github.com/mothivenkatesh/lean-engineering-skills)** — 11 Claude Code skills for building stable systems without bloat. The engineering-discipline complement to this spec layer.
+- **[cortex](https://github.com/mothivenkatesh/cortex)** — an AI agent framework (workflows, agents, tools, self-healing) for when you are ready to *build* what you spec'd here.
+- **[claude-academy](https://github.com/mothivenkatesh/claude-academy)** — a Duolingo-style app to go from Claude enthusiast to architect.
 
 ## Credits
 
