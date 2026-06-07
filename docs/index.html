@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Learn &amp; Build AI Agents — idea-box + agent-blueprint</title>
+<meta name="description" content="Find an agent worth building, then spec it so it survives production. Two open-source tools: idea-box (1,000 validated pain points) and agent-blueprint (the reliable-agent playbook + 18 Claude Code skills)." />
+<meta property="og:title" content="Learn & Build AI Agents" />
+<meta property="og:description" content="Find an agent worth building, then spec it so it survives production. idea-box + agent-blueprint." />
+<meta property="og:type" content="website" />
+<style>
+  :root{
+    --bg:#0b0b0f; --panel:#14141b; --panel2:#101017; --line:#272733;
+    --tx:#ecebf1; --mut:#9a9aa8; --dim:#6f6f7e;
+    --lav:#8b85f0; --lav2:#b3aef7; --idea:#fde047; --green:#46d18b;
+    --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--tx);font-family:var(--sans);line-height:1.55;
+    -webkit-font-smoothing:antialiased;font-size:16px;
+    background-image:radial-gradient(60rem 40rem at 70% -10%,rgba(139,133,240,.10),transparent),radial-gradient(50rem 40rem at 10% 0%,rgba(253,224,71,.05),transparent);}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  .mut{color:var(--mut)} .dim{color:var(--dim)}
+  .mono{font-family:var(--mono)}
+  .lav{color:var(--lav2)} .ide{color:var(--idea)}
+
+  /* nav */
+  nav{position:sticky;top:0;z-index:20;backdrop-filter:blur(10px);
+    background:rgba(11,11,15,.7);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:60px}
+  .brand{font-weight:700;letter-spacing:-.01em;display:flex;gap:9px;align-items:center}
+  .brand .dot{width:9px;height:9px;border-radius:2px;background:linear-gradient(135deg,var(--idea),var(--lav));box-shadow:0 0 12px rgba(139,133,240,.6)}
+  .nav .links{display:flex;gap:22px;align-items:center;font-size:14px}
+  .nav .links a{color:var(--mut)} .nav .links a:hover{color:var(--tx)}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:9px 15px;border-radius:9px;
+    font-size:14px;font-weight:600;border:1px solid var(--line);transition:.15s}
+  .btn.p{background:var(--lav);color:#0b0b0f;border-color:var(--lav)}
+  .btn.p:hover{background:var(--lav2)}
+  .btn.g:hover{border-color:#3a3a48;background:#16161f}
+
+  /* hero */
+  header{padding:96px 0 60px}
+  .eyebrow{display:inline-flex;gap:8px;align-items:center;font-family:var(--mono);font-size:12.5px;
+    color:var(--mut);border:1px solid var(--line);border-radius:999px;padding:6px 13px;margin-bottom:26px}
+  h1{font-size:clamp(40px,7vw,72px);line-height:1.02;letter-spacing:-.03em;margin:0 0 20px;font-weight:800}
+  h1 .b{background:linear-gradient(120deg,var(--idea),var(--lav2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{font-size:clamp(17px,2.2vw,21px);color:var(--mut);max-width:680px;margin:0 0 34px}
+  .cta{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  .heroflow{margin-top:46px;display:flex;gap:14px;align-items:stretch;flex-wrap:wrap}
+  .flowcard{flex:1;min-width:240px;border:1px solid var(--line);border-radius:14px;padding:20px;background:linear-gradient(180deg,var(--panel),var(--panel2))}
+  .flowcard .k{font-family:var(--mono);font-size:12px;color:var(--dim);letter-spacing:.08em}
+  .flowcard h3{margin:8px 0 6px;font-size:19px;letter-spacing:-.01em}
+  .flowcard p{margin:0;color:var(--mut);font-size:14.5px}
+  .flowarrow{display:flex;align-items:center;color:var(--dim);font-size:24px;padding:0 2px}
+
+  section{padding:64px 0;border-top:1px solid var(--line)}
+  .lead{font-family:var(--mono);font-size:12.5px;letter-spacing:.1em;color:var(--lav2);text-transform:uppercase;margin:0 0 14px}
+  h2{font-size:clamp(26px,4vw,38px);letter-spacing:-.02em;margin:0 0 16px;font-weight:800}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .card{border:1px solid var(--line);border-radius:14px;padding:22px;background:var(--panel)}
+  .card.idea{border-color:rgba(253,224,71,.28)} .card.build{border-color:rgba(139,133,240,.3)}
+  .card .tag{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase}
+  .card.idea .tag{color:var(--idea)} .card.build .tag{color:var(--lav2)}
+  .card h3{font-size:22px;margin:10px 0 8px;letter-spacing:-.01em}
+  .card ul{margin:14px 0 18px;padding-left:18px;color:var(--mut);font-size:14.5px}
+  .card li{margin:5px 0}
+  .stat{display:flex;gap:18px;flex-wrap:wrap;margin:6px 0 16px}
+  .stat b{display:block;font-size:24px;color:var(--tx)} .stat span{font-size:12.5px;color:var(--dim)}
+
+  .why{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:8px}
+  .qcard{border:1px solid var(--line);border-radius:12px;padding:16px;background:var(--panel2)}
+  .qcard .n{font-family:var(--mono);color:var(--lav2);font-size:13px}
+  .qcard p{margin:8px 0 0;font-size:13.5px;color:var(--mut)}
+
+  .pipe{display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-family:var(--mono);font-size:13px}
+  .pill{border:1px solid var(--line);border-radius:8px;padding:7px 11px;background:var(--panel2);color:var(--mut)}
+  .pill.g{color:var(--green);border-color:rgba(70,209,139,.3)}
+  .pill.s{color:var(--lav2);border-color:rgba(139,133,240,.25)}
+  .pill .st{color:var(--idea)}
+
+  .example{display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:center}
+  .ex{border:1px solid var(--line);border-radius:14px;padding:20px;background:var(--panel)}
+  .ex h4{margin:0 0 10px;font-size:15px;font-family:var(--mono)}
+  .ex.idea h4{color:var(--idea)} .ex.build h4{color:var(--lav2)}
+  .ex .row{font-size:13.5px;color:var(--mut);margin:5px 0}
+  .ex .row b{color:var(--tx);font-weight:600}
+  .arrowbig{font-size:30px;color:var(--dim);text-align:center}
+
+  .term{background:#08080c;border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:14px 0}
+  .term .bar{display:flex;gap:7px;padding:11px 14px;border-bottom:1px solid var(--line)}
+  .term .bar i{width:11px;height:11px;border-radius:50%;display:block}
+  .term .bar i:nth-child(1){background:#ff5f56}.term .bar i:nth-child(2){background:#ffbd2e}.term .bar i:nth-child(3){background:#27c93f}
+  .term pre{margin:0;padding:16px;font-family:var(--mono);font-size:13.5px;color:#d7d7e2;overflow-x:auto}
+  .term .cmt{color:var(--dim)} .term .pr{color:var(--green)}
+  .copy{position:absolute;top:10px;right:10px;font-family:var(--mono);font-size:11px;color:var(--mut);
+    border:1px solid var(--line);border-radius:7px;padding:5px 9px;cursor:pointer;background:#0b0b0f}
+  .copy:hover{color:var(--tx);border-color:#3a3a48}
+  .termwrap{position:relative}
+
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .step .n{font-family:var(--mono);font-size:28px;color:var(--lav2);opacity:.5}
+  .step h4{margin:6px 0 6px;font-size:17px}
+  .step p{margin:0;color:var(--mut);font-size:14px}
+
+  .evi{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+  .evi span{font-family:var(--mono);font-size:12.5px;color:var(--mut);border:1px solid var(--line);border-radius:999px;padding:7px 13px;background:var(--panel2)}
+
+  footer{border-top:1px solid var(--line);padding:46px 0 60px;color:var(--mut);font-size:14px}
+  .foot{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+  .foot a{color:var(--mut)} .foot a:hover{color:var(--tx)}
+  .foot .col h5{color:var(--tx);font-size:13px;margin:0 0 10px;letter-spacing:.02em}
+  .foot .col a{display:block;margin:6px 0}
+
+  .reveal{opacity:0;transform:translateY(14px);transition:.6s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  @media(max-width:860px){.grid2,.grid3,.steps{grid-template-columns:1fr}.why{grid-template-columns:1fr 1fr}.example{grid-template-columns:1fr}.arrowbig{transform:rotate(90deg)}.nav .links a:not(.btn){display:none}}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap nav">
+  <div class="brand"><span class="dot"></span> Learn &amp; Build Agents</div>
+  <div class="links">
+    <a href="#find">Find</a>
+    <a href="#build">Build</a>
+    <a href="#start">Get started</a>
+    <a class="btn g" href="https://github.com/mothivenkatesh/agent-blueprint" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+</div></nav>
+
+<header><div class="wrap">
+  <div class="eyebrow">◈ two open-source tools · one workflow</div>
+  <h1>Learn &amp; build<br><span class="b">AI agents</span> that ship.</h1>
+  <p class="sub">Find an agent worth building. Then spec it so it survives production. Most agents die not because the model is weak, but because the spec skipped the hard parts.</p>
+  <div class="cta">
+    <a class="btn p" href="https://mothivenkatesh.github.io/idea-box/web/" target="_blank" rel="noopener">🔎 Browse 1,000 agent ideas</a>
+    <a class="btn g" href="#build">📐 Get the playbook</a>
+  </div>
+
+  <div class="heroflow">
+    <div class="flowcard">
+      <div class="k">STEP 01 · FIND</div>
+      <h3 class="ide">idea-box</h3>
+      <p>1,000 structured pain points for vertical AI — each with persona, TAM, what they pay now, and the gap.</p>
+    </div>
+    <div class="flowarrow">→</div>
+    <div class="flowcard">
+      <div class="k">STEP 02 · BUILD</div>
+      <h3 class="lav">agent-blueprint</h3>
+      <p>The reliable-agent playbook + 18 Claude Code skills. Turn the idea into an eval-gated PRD.</p>
+    </div>
+    <div class="flowarrow">→</div>
+    <div class="flowcard">
+      <div class="k">RESULT</div>
+      <h3 style="color:var(--green)">Ship it</h3>
+      <p>A spec your engineers can build and that won't get scrapped in production.</p>
+    </div>
+  </div>
+</div></header>
+
+<!-- FIND -->
+<section id="find"><div class="wrap">
+  <p class="lead">Step 01 — Find what to build</p>
+  <h2>Start with a pain that already has paying users.</h2>
+  <p class="sub">Stop reading "100 startup ideas" listicles. Every idea-box entry answers the six questions a serious builder actually asks — with sources.</p>
+  <div class="grid2 reveal">
+    <div class="card idea">
+      <div class="tag">★ idea-box</div>
+      <h3>1,000 validated pain points</h3>
+      <div class="stat">
+        <div><b class="ide">1,000</b><span>structured pain points</span></div>
+        <div><b class="ide">50</b><span>investor-grade validated</span></div>
+        <div><b class="ide">6</b><span>questions per entry</span></div>
+      </div>
+      <ul>
+        <li><b>Who hurts</b> — the specific role, not "small businesses"</li>
+        <li><b>How big</b> — firm counts + industry spend</li>
+        <li><b>What they pay now</b> — incumbent SaaS pricing</li>
+        <li><b>The gap</b> — why today's tools miss it</li>
+        <li><b>Why now</b> — the infra or rule change that opened it</li>
+      </ul>
+      <a class="btn p" href="https://mothivenkatesh.github.io/idea-box/web/" target="_blank" rel="noopener">Browse the live site →</a>
+    </div>
+    <div class="card">
+      <div class="tag mut">A real entry, unpacked</div>
+      <h3 style="font-size:16px;font-family:var(--mono)">PAIN-0001 · repair-shop quote-to-invoice</h3>
+      <div class="ex" style="border:0;padding:0;background:transparent;margin-top:10px">
+        <div class="row"><b>Who</b> · 1–5 technician repair-shop owner</div>
+        <div class="row"><b>Breaks</b> · quotes by SMS, stock in a spreadsheet, bookings in Calendar — nothing connected, parts oversold</div>
+        <div class="row"><b>How big</b> · ~150,000 shops in North America</div>
+        <div class="row"><b>Pays now</b> · ~$200/mo to RepairShopr / RepairDesk</div>
+        <div class="row"><b>Why now</b> · cheap WhatsApp API + crashed LLM voice costs</div>
+        <div class="row dim mono" style="margin-top:10px">signal 9/10 · score 92/100</div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<!-- BUILD -->
+<section id="build"><div class="wrap">
+  <p class="lead">Step 02 — Build it so it survives</p>
+  <h2>The reliable-agent playbook for product managers.</h2>
+  <p class="sub">The frameworks are the power tools; <span class="lav">agent-blueprint</span> is the blueprint and the building code. 18 Claude Code skills that turn an idea into a shippable, eval-gated PRD. Framework-agnostic. It specs and decides — it does not lock you into a runtime.</p>
+
+  <h3 style="font-size:16px;margin:26px 0 12px" class="mut">The five questions that decide if an agent ships — and that generic PRDs skip:</h3>
+  <div class="why reveal">
+    <div class="qcard"><div class="n">01</div><p>How will we know it <b style="color:var(--tx)">works</b>? (eval plan)</p></div>
+    <div class="qcard"><div class="n">02</div><p>What can it do <b style="color:var(--tx)">without a human</b>? (HITL)</p></div>
+    <div class="qcard"><div class="n">03</div><p>What does it <b style="color:var(--tx)">remember</b>? (memory)</p></div>
+    <div class="qcard"><div class="n">04</div><p>How does it <b style="color:var(--tx)">fail</b>? (premortem)</p></div>
+    <div class="qcard"><div class="n">05</div><p>How does it <b style="color:var(--tx)">get better</b>? (learning loop)</p></div>
+  </div>
+
+  <h3 style="font-size:16px;margin:34px 0 12px" class="mut">18 skills, three layers — gates decide, sections write, the spine assembles &amp; audits:</h3>
+  <div class="pipe reveal">
+    <span class="pill g">worth-an-agent</span><span class="pill g">agent-vs-workflow</span><span class="pill g">can-we-eval-it</span>
+    <span class="dim">→</span>
+    <span class="pill s">agent-type</span><span class="pill s">architecture</span><span class="pill s">scope</span><span class="pill s">tools</span><span class="pill s">memory</span><span class="pill s">eval<span class="st">★</span></span><span class="pill s">hitl<span class="st">★</span></span><span class="pill s">safety</span><span class="pill s">reliability<span class="st">★</span></span><span class="pill s">model+cost</span><span class="pill s">gateway</span><span class="pill s">observability</span><span class="pill s">learning<span class="st">★</span></span>
+    <span class="dim">→</span>
+    <span class="pill">agent-prd</span><span class="pill">agent-prd-review</span>
+  </div>
+  <p class="dim" style="font-size:13px;margin-top:10px">★ = the differentiator sections almost no agent PRD writes well.</p>
+
+  <div style="margin-top:26px"><a class="btn p" href="https://github.com/mothivenkatesh/agent-blueprint" target="_blank" rel="noopener">Open the playbook on GitHub →</a></div>
+</div></section>
+
+<!-- FLOW -->
+<section><div class="wrap">
+  <p class="lead">The workflow</p>
+  <h2>From a pain point to a shippable spec.</h2>
+  <div class="example reveal" style="margin-top:22px">
+    <div class="ex idea">
+      <h4>★ idea-box gives you the WHAT</h4>
+      <div class="row"><b>PAIN-0001</b> — repair-shop quote-to-invoice agent</div>
+      <div class="row">persona · TAM · pricing · gap · why-now</div>
+      <div class="row dim">a real opportunity, with paying users</div>
+    </div>
+    <div class="arrowbig">→</div>
+    <div class="ex build">
+      <h4>◆ agent-blueprint gives you the HOW</h4>
+      <div class="row">gate it (agent or workflow?) · type it (operational)</div>
+      <div class="row">eval plan · HITL on refunds · failure premortem</div>
+      <div class="row dim">a 16-section, eval-gated PRD engineering can build</div>
+    </div>
+  </div>
+  <p class="mut" style="text-align:center;margin-top:18px;font-size:14px">See a full worked example: <a class="lav" href="https://github.com/mothivenkatesh/agent-blueprint/blob/main/examples/refund-resolution-agent-prd.md" target="_blank" rel="noopener">refund-resolution-agent PRD →</a></p>
+</div></section>
+
+<!-- EVIDENCE -->
+<section><div class="wrap" style="text-align:center">
+  <p class="lead" style="text-align:center">Not vibes</p>
+  <h2>Distilled from a word-by-word read of the field.</h2>
+  <p class="sub" style="margin:0 auto 24px">Every recommendation is grounded in real production sources, cited in the repo — not one vendor's blog.</p>
+  <div class="evi reveal">
+    <span>Orkes Conductor · 165 posts</span>
+    <span>Principles of Building AI Agents · full book</span>
+    <span>Mastra · 199 posts + research</span>
+    <span>Antigma ante · 43 docs</span>
+    <span>Lyzr · agent types</span>
+  </div>
+  <p class="mut" style="margin-top:22px;font-size:14px">Deciding which builder to run it on? See the companion <a class="lav" href="https://mothivenkatesh.github.io/agentic-workflow-builder-comparison/" target="_blank" rel="noopener">Agentic Workflow Builder Comparison →</a> (9 tools across 4 layers).</p>
+</div></section>
+
+<!-- GET STARTED -->
+<section id="start"><div class="wrap">
+  <p class="lead">Get started</p>
+  <h2>Three steps. No setup tax.</h2>
+  <div class="steps reveal" style="margin-top:22px">
+    <div class="step card">
+      <div class="n">01</div><h4 class="ide">Find an idea</h4>
+      <p>Browse 1,000 validated pain points and pick one with paying users and broken tools.</p>
+      <p style="margin-top:10px"><a class="lav" href="https://mothivenkatesh.github.io/idea-box/web/" target="_blank" rel="noopener">Open idea-box →</a></p>
+    </div>
+    <div class="step card">
+      <div class="n">02</div><h4 class="lav">Install the playbook</h4>
+      <div class="termwrap">
+        <div class="term"><div class="bar"><i></i><i></i><i></i></div>
+        <pre><span class="pr">$</span> /plugin marketplace add mothivenkatesh/agent-blueprint
+<span class="pr">$</span> /plugin install agent-blueprint@agent-blueprint</pre></div>
+        <button class="copy" data-copy="/plugin marketplace add mothivenkatesh/agent-blueprint
+/plugin install agent-blueprint@agent-blueprint">copy</button>
+      </div>
+    </div>
+    <div class="step card">
+      <div class="n">03</div><h4 style="color:var(--green)">Spec your agent</h4>
+      <div class="termwrap">
+        <div class="term"><div class="bar"><i></i><i></i><i></i></div>
+        <pre><span class="cmt"># draft a full PRD from your idea</span>
+<span class="pr">$</span> /agent-blueprint:agent-prd
+<span class="cmt"># or audit a spec you already have</span>
+<span class="pr">$</span> /agent-blueprint:agent-prd-review</pre></div>
+        <button class="copy" data-copy="/agent-blueprint:agent-prd">copy</button>
+      </div>
+    </div>
+  </div>
+  <p class="dim" style="font-size:13px;margin-top:14px">Works in Claude Code today; the skills follow the open Agent Skills standard, so they also run in Cursor, Copilot, and other agents.</p>
+</div></section>
+
+<footer><div class="wrap foot">
+  <div class="col" style="max-width:280px">
+    <div class="brand" style="margin-bottom:10px"><span class="dot"></span> Learn &amp; Build Agents</div>
+    <p class="dim" style="font-size:13.5px;margin:0">Find an agent worth building, then spec it so it survives production. Two open-source tools, MIT-licensed.</p>
+  </div>
+  <div class="col"><h5>Find</h5>
+    <a href="https://mothivenkatesh.github.io/idea-box/web/" target="_blank" rel="noopener">idea-box · live site</a>
+    <a href="https://github.com/mothivenkatesh/idea-box" target="_blank" rel="noopener">idea-box · GitHub</a>
+  </div>
+  <div class="col"><h5>Build</h5>
+    <a href="https://github.com/mothivenkatesh/agent-blueprint" target="_blank" rel="noopener">agent-blueprint · GitHub</a>
+    <a href="https://github.com/mothivenkatesh/agent-blueprint/blob/main/examples/refund-resolution-agent-prd.md" target="_blank" rel="noopener">Example PRD</a>
+    <a href="https://mothivenkatesh.github.io/agentic-workflow-builder-comparison/" target="_blank" rel="noopener">Builder comparison</a>
+  </div>
+  <div class="col"><h5>More</h5>
+    <a href="https://github.com/mothivenkatesh/MStack" target="_blank" rel="noopener">MStack</a>
+    <a href="https://github.com/mothivenkatesh" target="_blank" rel="noopener">@mothivenkatesh</a>
+  </div>
+</div>
+<div class="wrap dim" style="font-size:12.5px;margin-top:26px">Built by Mothi Venkatesh · MIT · Not affiliated with the sources it distills.</div>
+</footer>
+
+<script>
+  // copy buttons
+  document.querySelectorAll('.copy').forEach(b=>{
+    b.addEventListener('click',()=>{navigator.clipboard.writeText(b.dataset.copy).then(()=>{
+      const t=b.textContent;b.textContent='copied ✓';setTimeout(()=>b.textContent=t,1400);});});
+  });
+  // reveal on scroll
+  const io=new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

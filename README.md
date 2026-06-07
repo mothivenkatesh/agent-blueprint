@@ -4,6 +4,8 @@
 
 > Your agent won't die in production because the spec skipped the hard parts.
 
+**Live → [Learn &amp; Build Agents](https://mothivenkatesh.github.io/agent-blueprint/)** · pick an idea in [idea-box](https://mothivenkatesh.github.io/idea-box/web/), then spec it here.
+
 Teams have great frameworks for *building* agents and almost no method for *deciding what to
 build* and speccing it so it survives. So agents ship that should have been workflows, with no
 eval plan, no autonomy boundary, and no failure plan, and a large share get scrapped in
