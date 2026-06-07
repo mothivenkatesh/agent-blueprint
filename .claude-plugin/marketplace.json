@@ -1,0 +1,15 @@
+{
+  "name": "agent-builder",
+  "owner": { "name": "Mothi Venkatesh" },
+  "metadata": {
+    "description": "The reliable-agent playbook for product managers: gates, section-writers, and a critic for shippable Agentic AI PRDs.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "agent-builder",
+      "source": "./",
+      "description": "15 skills that turn an agent idea into a complete, eval-ready Agentic AI PRD: 3 gates, 10 section-writers, an orchestrator, and a critic."
+    }
+  ]
+}
