@@ -93,3 +93,15 @@ e += [arrow(640, 160, 160, 200)]
 e += box(60, 200, 680, 50, "Reliable, self-learning agent  (ship all three, or drop the claim)", WHITE, INK, 15)
 e += [text(40, 290, 720, 24, "The other reliability pillars: HITL boundaries · guardrails · failure premortem · observability", 13, INK, "left")]
 save("03-self-learning-trio", e)
+
+# ---- Diagram 4: agent architecture & types ----
+e = []
+e += [text(40, 20, 720, 30, "Agent architecture & types", 22, LAV_S, "left")]
+e += box(40, 75, 350, 84, "REASONING agents\nresearch / analysis / coding / negotiation\n-> invest in eval", GREEN, GREEN_S, 13)
+e += box(410, 75, 350, 84, "OPERATIONAL agents\nreporting / monitoring / scheduling / ETL\n-> invest in cost + safeguards", AMBER, AMBER_S, 13)
+e += [arrow(400, 159, 400, 198)]
+e += [text(40, 202, 720, 22, "Component blueprint (Antigma ante)", 16, LAV_S, "left")]
+for i, lbl in enumerate(["Context\nrules+RAG", "Memory\nlearned", "Tools /\nMCP", "Skills", "Sub-\nagents", "Model\ngateway"]):
+    e += box(40 + i * 120, 238, 110, 60, lbl, LAV, LAV_S, 12)
+e += [text(40, 316, 720, 20, "+ permissions / approvals   ·   surface: interactive / headless / served / gateway", 12, INK, "left")]
+save("04-architecture-and-types", e)
