@@ -7,7 +7,7 @@ strategy**, a **reliability + failure premortem**, and a **self-learning loop**.
 
 It is two things at once:
 - a **playbook** — read `CLAUDE.md` and this README to learn *how* to spec a reliable agent;
-- a **skill pack** — 15 Claude Code skills that *do it with you*, section by section.
+- a **skill pack** — 18 Claude Code skills that *do it with you*, section by section.
 
 Every recommendation is grounded in a full, word-by-word read of three sources: the
 **Orkes Conductor** engineering blog (165 posts), the **"Principles of Building AI Agents"**
@@ -85,7 +85,26 @@ proven otherwise — "the AI can be wrong, the workflow never is."
 
 ---
 
-## The 15 skills
+## Agent architecture & types
+
+Two layers added from the Antigma `ante` docs + Lyzr's taxonomy: first **classify the agent's
+production type**, then **blueprint its components**.
+
+```mermaid
+flowchart TB
+  subgraph T["Agent type (Lyzr): pick a cognitive class"]
+    direction LR
+    R["Reasoning<br/>research, analysis, coding, negotiation<br/>=> invest in eval"]
+    O["Operational<br/>reporting, monitoring, scheduling, ETL<br/>=> invest in cost + safeguards"]
+  end
+  subgraph C["Component blueprint (Antigma ante)"]
+    direction LR
+    ctx["Context<br/>rules + RAG"] --- mem["Memory<br/>learned"] --- tools["Tools / MCP"] --- sk["Skills"] --- sub["Sub-agents"] --- gw["Model gateway"]
+  end
+  T --> C
+```
+
+## The 18 skills
 
 Namespaced as `/agent-builder:<skill>` once installed. ★ = the differentiator sections most
 agent PRDs skip.
@@ -95,6 +114,8 @@ agent PRDs skip.
 | **Gate** | `worth-an-agent` | Is an agent the cheapest tool that works, vs a workflow / script / nothing? |
 | **Gate** | `agent-vs-workflow` | Autonomy level + build mode (code-first vs durable engine vs hybrid) |
 | **Gate** | `can-we-eval-it` | Can success be measured? If not — stop. (hard kill-gate) |
+| **Section** | `agent-type` | Reasoning vs Operational + named production category + topology |
+| **Section** | `agent-architecture` | Component blueprint: context · memory · tools · MCP · skills · sub-agents · gateway |
 | **Section** | `scope-and-topology` | Capabilities, non-goals, single vs multi-agent shape |
 | **Section** | `tool-spec` | Tools, integrations, data access, I/O schemas, MCP, idempotency |
 | **Section** | `memory-spec` | working vs semantic-recall vs observational vs none |
@@ -103,6 +124,7 @@ agent PRDs skip.
 | **Section** | `safety-and-guardrails` | Prompt-injection / PII / RBAC / secrets / sandbox / spend caps |
 | **Section** | `reliability-and-failure` ★ | Retries / timeouts / idempotency / compensation + a failure premortem |
 | **Section** | `model-and-cost` | Model tiering, fallback chain, token/latency budget, unit economics |
+| **Section** | `model-gateway` | Provider routing, virtual-key budgets, BYOK, fail-closed (control plane) |
 | **Section** | `observability-and-ops` | Tracing, metrics, drift, rollout, versioning, governance |
 | **Section** | `learning-loop` ★ | How it improves: traces -> datasets -> re-eval -> fix |
 | **Spine** | `agent-prd` | Orchestrator: runs the gates, drives the sections, assembles the doc |
@@ -175,6 +197,7 @@ evaluation section.
   - `skill-evidence-map.md` — Orkes reliability / HITL / governance canon
   - `gap-closed-synthesis.md` — Mastra memory + eval + self-improve canon
   - `book-code.md` — verbatim code recovered from the *Principles* ebook
+  - `antigma-lyzr-architecture.md` — Antigma `ante` architecture + Lyzr agent-type taxonomy
 - **Diagrams:** [`docs/diagrams/`](./docs/diagrams) — editable `.excalidraw` sources +
   `build_diagrams.py` to regenerate them. The README renders them inline as Mermaid so they
   display on GitHub; open the `.excalidraw` files in [excalidraw.com](https://excalidraw.com)
@@ -185,7 +208,7 @@ agent-builder/
 ├── CLAUDE.md                  the playbook (prime directives + per-skill do's/don'ts)
 ├── README.md                  you are here
 ├── .claude-plugin/            plugin.json + marketplace.json
-├── skills/                    15 SKILL.md files (gates, sections, spine)
+├── skills/                    18 SKILL.md files (gates, sections, spine)
 ├── references/                the distilled evidence (the moat)
 └── docs/diagrams/             editable Excalidraw sources + generator
 ```
@@ -203,7 +226,7 @@ bumps when the references are refreshed.
 
 ## Status
 
-v0.1 — all 15 skills shipped. Roadmap: a worked example PRD, a trigger-accuracy eval, and an
+v0.2 — all 18 skills shipped (added agent-architecture, agent-type, model-gateway from the Antigma + Lyzr research). Roadmap: a worked example PRD, a trigger-accuracy eval, and an
 npm installer for one-command cross-agent install.
 
 ## Credits

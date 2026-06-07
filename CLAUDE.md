@@ -8,7 +8,7 @@ Mastra blog + agent-memory research (199 posts). Evidence maps live in `referenc
 ## What this pack does
 
 Turns a PM's idea into a **shippable Agentic AI PRD**. It does NOT build the agent.
-15 skills in three layers: **Gates** (decide before you spec) → **Sections** (write +
+18 skills in three layers: **Gates** (decide before you spec) → **Sections** (write +
 pressure-test each PRD block) → **Spine** (assemble + critique). Each skill writes one
 part of the document, forces the right decision, and cites the corpus for its defaults.
 
@@ -55,17 +55,20 @@ a **failure premortem**, and a **learning loop**. Those five are the product.
 Sections, in order. Skills that own each are in brackets.
 1. Problem, goal, non-goals, users/jobs `[/worth-an-agent]`
 2. Why an agent + autonomy level + build mode `[/agent-vs-workflow]`
-3. Capabilities & agent topology `[/scope-and-topology]`
-4. Tools, integrations & data access `[/tool-spec]`
-5. Memory & context strategy `[/memory-spec]`
-6. **Success metrics & eval plan** `[/eval-plan]`
-7. **Autonomy boundaries & HITL** `[/hitl-and-autonomy]`
-8. Trust, safety, security & compliance `[/safety-and-guardrails]`
-9. **Reliability, latency & failure handling** `[/reliability-and-failure]`
-10. Model strategy & unit economics `[/model-and-cost]`
-11. Observability, ops, rollout & governance `[/observability-and-ops]`
-12. **Self-improvement / learning loop** `[/learning-loop]`
-13. Risks, dependencies, open questions `[all]`
+3. Agent type & topology (Reasoning/Operational + category) `[/agent-type]`
+4. Agent architecture / component blueprint `[/agent-architecture]`
+5. Capabilities, scope & decomposition `[/scope-and-topology]`
+6. Tools, integrations & data access `[/tool-spec]`
+7. Memory & context strategy `[/memory-spec]`
+8. **Success metrics & eval plan** `[/eval-plan]`
+9. **Autonomy boundaries & HITL** `[/hitl-and-autonomy]`
+10. Trust, safety, security & compliance `[/safety-and-guardrails]`
+11. **Reliability, latency & failure handling** `[/reliability-and-failure]`
+12. Model strategy & unit economics `[/model-and-cost]`
+13. Model access & gateway `[/model-gateway]`
+14. Observability, ops, rollout & governance `[/observability-and-ops]`
+15. **Self-improvement / learning loop** `[/learning-loop]`
+16. Risks, dependencies, open questions `[all]`
 
 Rules: requirement IDs + MoSCoW + acceptance criteria per requirement; evidence
 citations inline; an open-questions list is mandatory (never fake certainty). Pairs with
@@ -73,7 +76,7 @@ citations inline; an open-questions list is mandatory (never fake certainty). Pa
 
 ---
 
-## The 15 skills — context + do's & don'ts
+## The 18 skills — context + do's & don'ts
 
 ### Spine
 
@@ -104,6 +107,21 @@ skills, assemble the doc with requirement IDs and depth control.
 - Anchor: book "evals are just tests"; Mastra scorers.
 
 ### Sections
+
+**`/agent-type`** — production type classifier (runs early).
+- DO: pick Reasoning vs Operational first; reuse a standard category from the 15-type taxonomy; pick the simplest topology.
+- DON'T: invent a bespoke type; default to multi-agent; skip the cognitive-class call (it sets eval/cost/guardrail intensity).
+- Anchor: Lyzr Reasoning/Operational 15-type taxonomy; Antigma agent-org + sub-agents.
+
+**`/agent-architecture`** — component blueprint (the parts list, above tool/memory specs).
+- DO: enumerate every slot (authored context, learned memory, tools, MCP, skills, sub-agents, model+gateway, permissions, surface); separate authored rules from learned memory; state the deployment surface.
+- DON'T: collapse context/memory/tools into one box; leave the model-access layer implicit; decide topology here.
+- Anchor: Antigma ante anatomy (AGENTS.md vs MEMORY.md, tools/MCP/skills/sub-agents, protocol/storage, surfaces).
+
+**`/model-gateway`** — model-access control plane (augments model-and-cost).
+- DO: scope virtual keys with hard budgets; define overrun + unreachable-backend behavior; attribute spend; allow BYOK.
+- DON'T: ship raw provider keys to the runtime; assume one provider's wire format; bury this inside "pick a model".
+- Anchor: Antigma antix (routing, virtual keys + budgets, BYOK, fail-closed, spend attribution).
 
 **`/scope-and-topology`** — capabilities + agent shape.
 - DO: write a capability map and explicit non-goals; start single-agent, justify supervisor/hierarchical only when a single agent provably can't; one job per agent.
@@ -160,8 +178,9 @@ skills, assemble the doc with requirement IDs and depth control.
 ## How the skills chain
 
 `/worth-an-agent` → `/agent-vs-workflow` → `/can-we-eval-it` (gates; stop if any kills)
-→ the section skills (any order, but `/eval-plan` must run because §6 gates the others)
-→ `/agent-prd` assembles → `/agent-prd-review` audits.
+→ `/agent-type` then `/agent-architecture` (classify + blueprint) → the remaining section
+skills (`/model-gateway` runs with `/model-and-cost`; `/eval-plan` is required because the eval
+section gates the others) → `/agent-prd` assembles → `/agent-prd-review` audits.
 
 Hard dependency: you cannot complete §6 (Success/eval) without `/eval-plan`, and
 `/can-we-eval-it` will not pass without a rubric. Memory, eval, and learning-loop are the
@@ -179,4 +198,5 @@ skill. Bump the plugin version when references are refreshed.
 - `references/skill-evidence-map.md` — Orkes reliability/HITL/governance canon
 - `references/gap-closed-synthesis.md` — Mastra memory + eval + self-improve canon
 - `references/book-code.md` — verbatim code recovered from the Principles ebook
+- `references/antigma-lyzr-architecture.md` — Antigma ante architecture + Lyzr agent-type taxonomy
 Every skill cites these instead of restating them.
