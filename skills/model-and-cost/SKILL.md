@@ -3,7 +3,7 @@ name: model-and-cost
 description: >
   Specify an agent's model strategy and unit economics. Use when choosing models, designing a
   fallback chain, setting a token/latency budget, estimating cost-per-task, or deciding which
-  steps get a cheap vs a strong model. Writes PRD §10 in the agent-builder pack.
+  steps get a cheap vs a strong model. Writes PRD §10 in the agent-blueprint pack.
 allowed-tools: Read, Write, Edit
 ---
 

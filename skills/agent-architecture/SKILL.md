@@ -5,7 +5,7 @@ description: >
   when designing an agent's architecture, deciding its parts (context, memory, tools, MCP,
   skills, sub-agents, model gateway, permissions), drawing a component/data-flow diagram, or
   asking "what are the pieces of this agent and how do they connect". Writes the "Agent
-  architecture / component blueprint" section in the agent-builder pack.
+  architecture / component blueprint" section in the agent-blueprint pack.
 allowed-tools: Read, Write, Edit
 ---
 

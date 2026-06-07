@@ -3,7 +3,7 @@ name: scope-and-topology
 description: >
   Define an agent's capabilities, non-goals, and agent topology (single vs supervisor vs
   multi-agent). Use when scoping what an agent will and won't do, deciding whether one agent
-  or several, or designing a supervisor/sub-agent structure. Writes PRD §3 in the agent-builder pack.
+  or several, or designing a supervisor/sub-agent structure. Writes PRD §3 in the agent-blueprint pack.
 allowed-tools: Read, Write, Edit
 ---
 

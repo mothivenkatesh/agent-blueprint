@@ -3,7 +3,7 @@ name: observability-and-ops
 description: >
   Specify an agent's observability, operations, rollout, and governance. Use when planning
   tracing/metrics/logs, drift detection, on-call, dev→prod promotion, versioning, RBAC, or
-  rollback criteria for an agent. Writes PRD §11 in the agent-builder pack.
+  rollback criteria for an agent. Writes PRD §11 in the agent-blueprint pack.
 allowed-tools: Read, Write, Edit
 ---
 

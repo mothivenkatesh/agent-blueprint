@@ -4,7 +4,7 @@ description: >
   Hard gate: can the agent's success be measured before you commit to building it? Use when
   defining acceptance criteria for an agent, asking "how will we know it works", or before
   green-lighting an agent build. If you cannot produce a rubric, the answer is: don't build.
-  Gate 3 of 3 in the agent-builder pack; feeds eval-plan.
+  Gate 3 of 3 in the agent-blueprint pack; feeds eval-plan.
 allowed-tools: Read, Write, Edit
 ---
 

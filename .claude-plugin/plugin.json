@@ -1,9 +1,9 @@
 {
-  "name": "agent-builder",
+  "name": "agent-blueprint",
   "description": "A playbook + skill pack that helps any product manager build reliable AI agents. Gates decide if an agent is even the right tool; section-writers draft the parts a generic PRD omits — eval plan, human-in-the-loop boundaries, memory strategy, reliability + failure premortem, a learning loop, agent architecture, and production agent-type selection; a critic audits the result. Grounded in a full read of Orkes Conductor, the Mastra 'Principles of Building AI Agents' book, and Mastra's agent-memory research. Use when scoping, drafting, or reviewing an agent / agentic-AI product spec.",
   "version": "0.2.0",
   "author": { "name": "Mothi Venkatesh" },
-  "homepage": "https://github.com/mothivenkatesh/agent-builder",
-  "repository": { "type": "git", "url": "https://github.com/mothivenkatesh/agent-builder" },
+  "homepage": "https://github.com/mothivenkatesh/agent-blueprint",
+  "repository": { "type": "git", "url": "https://github.com/mothivenkatesh/agent-blueprint" },
   "license": "MIT"
 }

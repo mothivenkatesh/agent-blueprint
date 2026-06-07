@@ -3,7 +3,7 @@ name: safety-and-guardrails
 description: >
   Specify an agent's trust, safety, security, and compliance. Use when designing guardrails
   against prompt injection / PII / jailbreaks, planning RBAC and secrets, sandboxing
-  agent-run code, setting spend caps, or meeting compliance. Writes PRD §8 in the agent-builder pack.
+  agent-run code, setting spend caps, or meeting compliance. Writes PRD §8 in the agent-blueprint pack.
 allowed-tools: Read, Write, Edit
 ---
 

@@ -4,7 +4,7 @@ description: >
   Draft a complete Agentic AI PRD from a product idea. Use when a PM says "write a PRD for
   this agent", wants to turn an agent idea into a spec, or needs the full agentic product
   document. The orchestrator: runs the gates, drives the section-writers, and assembles a
-  traceable PRD. The entry point of the agent-builder pack.
+  traceable PRD. The entry point of the agent-blueprint pack.
 allowed-tools: Read, Write, Edit
 ---
 

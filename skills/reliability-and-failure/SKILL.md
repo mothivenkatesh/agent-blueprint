@@ -4,7 +4,7 @@ description: >
   Specify an agent's reliability, latency, and failure handling, and run a failure premortem.
   Use when defining retries/timeouts/idempotency, a latency budget, compensation/rollback, or
   enumerating how an agent breaks and how it degrades. A differentiator section. Writes PRD §9
-  in the agent-builder pack.
+  in the agent-blueprint pack.
 allowed-tools: Read, Write, Edit
 ---
 

@@ -4,7 +4,7 @@ description: >
   Specify how an agent improves over time — the self-learning loop. Use when planning continuous
   improvement, turning production traces into eval datasets, defining what is automated vs
   human-reviewed, or claiming an agent is "self-learning." The section that earns the word. Writes
-  PRD §12 in the agent-builder pack.
+  PRD §12 in the agent-blueprint pack.
 allowed-tools: Read, Write, Edit
 ---
 

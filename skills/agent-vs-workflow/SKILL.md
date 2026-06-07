@@ -4,7 +4,7 @@ description: >
   Choose the autonomy level and build mode for an agent product. Use when deciding "agent or
   workflow or hybrid", picking how autonomous an agent should be, or choosing a build
   architecture (code-first agent framework vs durable workflow engine vs hybrid). Gate 2 of 3
-  in the agent-builder pack; writes the "why an agent + approach" section.
+  in the agent-blueprint pack; writes the "why an agent + approach" section.
 allowed-tools: Read, Write, Edit
 ---
 

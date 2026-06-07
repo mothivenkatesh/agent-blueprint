@@ -1,23 +1,62 @@
-# agent-builder
+# agent-blueprint
 
-**The reliable-agent playbook for product managers.** A Claude Code skill pack that turns a
-product idea into a *shippable* Agentic AI PRD — including the five things a generic PRD
-template always misses: an **eval plan**, **human-in-the-loop boundaries**, a **memory
-strategy**, a **reliability + failure premortem**, and a **self-learning loop**.
+**The reliable-agent playbook for product managers.**
+
+> Your agent won't die in production because the spec skipped the hard parts.
+
+Teams have great frameworks for *building* agents and almost no method for *deciding what to
+build* and speccing it so it survives. So agents ship that should have been workflows, with no
+eval plan, no autonomy boundary, and no failure plan, and a large share get scrapped in
+production. `agent-blueprint` fixes the spec, not the code.
+
+Think of it this way: **the frameworks are the power tools; this is the blueprint and the
+building code.** You can own the best tools and still build a house that collapses.
 
 It is two things at once:
-- a **playbook** — read `CLAUDE.md` and this README to learn *how* to spec a reliable agent;
+- a **playbook** — read [`CLAUDE.md`](./CLAUDE.md) to learn *how* to spec a reliable agent;
 - a **skill pack** — 18 Claude Code skills that *do it with you*, section by section.
 
-Every recommendation is grounded in a full, word-by-word read of three sources: the
-**Orkes Conductor** engineering blog (165 posts), the **"Principles of Building AI Agents"**
-book (Sam Bhagwat / Mastra, 3rd ed), and the **Mastra** blog + agent-memory research
-(199 posts). The distilled evidence ships in [`references/`](./references).
+Every recommendation is grounded in a word-by-word read of the field's best production sources:
+the **Orkes Conductor** blog (165 posts), the **"Principles of Building AI Agents"** book
+(Sam Bhagwat / Mastra, 3rd ed), **Mastra's** blog + agent-memory research (199 posts), and
+**Antigma's `ante`** docs + **Lyzr's** agent-type taxonomy. The distilled evidence ships in
+[`references/`](./references).
 
-> Not affiliated with Orkes or Mastra. This is an independent distillation of their public
-> material into a PM-facing playbook, with sources cited throughout.
+> For [a PM or founder specifying an AI agent] who [can't turn the idea into a spec that
+> survives production], **agent-blueprint** is a [framework-agnostic, reliable-agent playbook]
+> that [forces the five decisions agent projects die without: eval, autonomy, memory, failure,
+> and learning]. Unlike [frameworks that build but don't decide, and generic AI-PRD templates
+> that skip agent reliability], it is distilled from the field and installs as 18 skills.
+
+> Not affiliated with Orkes, Mastra, Antigma, or Lyzr. An independent distillation of their
+> public work into a PM-facing playbook, with sources cited throughout.
 
 ---
+
+## Why this exists
+
+Most "agent PRDs" are normal PRDs with the word *agent* sprinkled in. They cannot answer the
+five questions that decide whether an agent ships and survives:
+
+1. **How will we know it works?** (eval plan)
+2. **What can it do without a human?** (autonomy + HITL boundaries)
+3. **What does it remember?** (memory strategy)
+4. **How does it fail, and how does it degrade?** (reliability + failure premortem)
+5. **How does it get better over time?** (self-learning loop)
+
+Everyone else sells the build, the list, or a blog. Nobody owns the decision layer:
+
+| What exists | What it does | What it misses |
+|---|---|---|
+| Frameworks (LangGraph, Mastra, CrewAI) | Build the agent | Don't tell you whether to, what type, or how reliable |
+| Awesome-lists | Link to things | No method |
+| Skill marketplaces (millions of skills) | Task skills | No coherent reliability playbook |
+| AI-PRD generators | Generic or codegen PRDs | Skip the agent-specific sections |
+| Production checklists (Anthropic, LangChain) | Authoritative advice | Fragmented, engineer-facing, vendor-locked |
+
+`agent-blueprint` is the one thing that is **a decision/spec layer + PM-facing +
+framework-agnostic + multi-source-distilled + forces the five sections + installable.** Each
+rival has one or two of those. None has all six.
 
 ## The pipeline
 
@@ -31,8 +70,8 @@ flowchart TD
   G --> S
   subgraph S["2 - SECTIONS: write and pressure-test each block"]
     direction LR
-    s1[scope] --> s2[tools] --> s3[memory] --> s4["eval star"] --> s5["hitl star"]
-    s6[safety] --> s7["reliability star"] --> s8["model+cost"] --> s9[observability] --> s10["learning star"]
+    s1[type] --> s2[architecture] --> s3[scope] --> s4[tools] --> s5[memory] --> s6["eval star"]
+    s7["hitl star"] --> s8[safety] --> s9["reliability star"] --> s10["model + gateway"] --> s11[observability] --> s12["learning star"]
   end
   S --> a[["3 - agent-prd: assemble"]]
   a --> r[["agent-prd-review: critic"]]
@@ -42,24 +81,6 @@ flowchart TD
 ```
 
 *Editable Excalidraw source: [`docs/diagrams/01-pipeline.excalidraw`](./docs/diagrams/01-pipeline.excalidraw)*
-
----
-
-## Why this exists
-
-Most "agent PRDs" are normal PRDs with the word *agent* sprinkled in. They cannot answer the
-five questions that decide whether an agent actually ships and survives production:
-
-1. **How will we know it works?** (eval plan)
-2. **What can it do without a human?** (autonomy + HITL boundaries)
-3. **What does it remember?** (memory strategy)
-4. **How does it fail, and how does it degrade?** (reliability + failure premortem)
-5. **How does it get better over time?** (self-learning loop)
-
-`agent-builder` forces a PM to answer all five, with evidence-backed defaults instead of vibes,
-and kills agent ideas that should have been a plain workflow.
-
----
 
 ## The first decision: do you even need an agent?
 
@@ -79,34 +100,43 @@ flowchart LR
 
 *Editable Excalidraw source: [`docs/diagrams/02-autonomy-build-mode.excalidraw`](./docs/diagrams/02-autonomy-build-mode.excalidraw)*
 
-The single most-repeated lesson across all three sources: **default to the least autonomy
-that works.** One LLM step inside a deterministic workflow beats an autonomous agent until
-proven otherwise — "the AI can be wrong, the workflow never is."
-
----
+The most-repeated lesson across every source: **default to the least autonomy that works.**
+One LLM step inside a deterministic workflow beats an autonomous agent until proven otherwise.
 
 ## Agent architecture & types
 
-Two layers added from the Antigma `ante` docs + Lyzr's taxonomy: first **classify the agent's
-production type**, then **blueprint its components**.
+Classify the agent's production type, then blueprint its components.
 
 ```mermaid
 flowchart TB
-  subgraph T["Agent type (Lyzr): pick a cognitive class"]
+  subgraph T["Agent type: pick a cognitive class"]
     direction LR
     R["Reasoning<br/>research, analysis, coding, negotiation<br/>=> invest in eval"]
     O["Operational<br/>reporting, monitoring, scheduling, ETL<br/>=> invest in cost + safeguards"]
   end
-  subgraph C["Component blueprint (Antigma ante)"]
+  subgraph C["Component blueprint"]
     direction LR
     ctx["Context<br/>rules + RAG"] --- mem["Memory<br/>learned"] --- tools["Tools / MCP"] --- sk["Skills"] --- sub["Sub-agents"] --- gw["Model gateway"]
   end
   T --> C
 ```
 
+*Editable Excalidraw source: [`docs/diagrams/04-architecture-and-types.excalidraw`](./docs/diagrams/04-architecture-and-types.excalidraw)*
+
+## What makes it different
+
+| | Decide before you build | Force the 5 sections everyone skips | Evidence, not vibes |
+|---|---|---|---|
+| **Value** | Kill the wrong idea early: is it worth an agent? agent or workflow? can we even measure it? | Eval, HITL, memory, failure premortem, learning loop — made non-optional | Framework-agnostic, distilled from the field, with sources |
+| **Proof** | 3 hard kill-gates; ~40% of agentic projects scrapped by 2027 (Gartner) | The eval gate refuses to proceed without a rubric; the critic rejects a PRD missing any of the five | Word-by-word read of ~550 production sources, cited in `references/` |
+| **Pain it kills** | Building an agent that should have been a script | Agents that regress while returning 200 OK; no autonomy line; no failure plan | Trusting a generic template or one vendor's blog |
+
+A framework can't claim column 1 (it builds). A generic PRD tool can't claim column 2 (it never
+kills an idea). A vendor checklist can't claim column 3 (it's locked to one stack).
+
 ## The 18 skills
 
-Namespaced as `/agent-builder:<skill>` once installed. ★ = the differentiator sections most
+Namespaced as `/agent-blueprint:<skill>` once installed. ★ = the differentiator sections most
 agent PRDs skip.
 
 | Layer | Skill | What it does |
@@ -130,8 +160,6 @@ agent PRDs skip.
 | **Spine** | `agent-prd` | Orchestrator: runs the gates, drives the sections, assembles the doc |
 | **Spine** | `agent-prd-review` | Critic: audits any agent PRD against the rubric -> a scorecard |
 
----
-
 ## What makes an agent "self-learning"
 
 ```mermaid
@@ -144,54 +172,54 @@ flowchart LR
 
 *Editable Excalidraw source: [`docs/diagrams/03-self-learning-trio.excalidraw`](./docs/diagrams/03-self-learning-trio.excalidraw)*
 
-"Self-learning" is not a magic module. It is three sections working together — **memory**
-(it remembers), an **eval loop** (it is measured), and a **self-improve** loop (production
-traces become new eval cases that drive fixes). Ship all three or do not make the claim.
-The only still-frontier piece is automated prompt/tool rewrite — that stays human-in-the-loop
-today, and the playbook says so honestly.
-
----
+"Self-learning" is not a magic module. It is three sections working together — memory (it
+remembers), an eval loop (it is measured), and a self-improve loop (production traces become new
+eval cases that drive fixes). Ship all three or do not make the claim.
 
 ## How to use
 
 ### Install
 
 ```bash
-/plugin marketplace add mothivenkatesh/agent-builder
-/plugin install agent-builder@agent-builder
+/plugin marketplace add mothivenkatesh/agent-blueprint
+/plugin install agent-blueprint@agent-blueprint
 ```
 
-(For local development: `/plugin marketplace add /absolute/path/to/agent-builder`, install,
-then `/reload-plugins`.)
+(Local dev: `/plugin marketplace add /absolute/path/to/agent-blueprint`, install, then `/reload-plugins`.)
 
 ### Two entry points
 
 ```text
-/agent-builder:agent-prd          # draft a full agent PRD from an idea (the orchestrator)
-/agent-builder:agent-prd-review   # audit an existing agent PRD -> a scorecard (zero setup)
+/agent-blueprint:agent-prd          # draft a full agent PRD from an idea (the orchestrator)
+/agent-blueprint:agent-prd-review   # audit an existing agent PRD -> a scorecard (zero setup)
 ```
 
-The fastest way to feel the value: run `agent-prd-review` on a spec you already have. It works
-with no setup and returns a section-by-section Agent PRD Scorecard you can share with your team.
+The fastest way to feel the value: run `agent-prd-review` on a spec you already have. Zero setup,
+and you get a section-by-section Agent PRD Scorecard you can share with your team.
 
 ### Typical flow
 
 1. `agent-prd` interviews you (problem, the perfect run, anger triggers, stakes).
 2. It runs the three **gates** and stops if any kills the idea (e.g. it should be a workflow).
 3. It walks the **sections**, forcing each decision and citing `references/` for defaults.
-4. It assembles a 13-section PRD with requirement IDs and acceptance criteria.
+4. It assembles a 16-section PRD with requirement IDs and acceptance criteria.
 5. `agent-prd-review` audits the result and flags anything missing.
 
-You can also call any single skill directly, e.g. `/agent-builder:eval-plan` to write just the
-evaluation section.
+See a full worked example: [`examples/refund-resolution-agent-prd.md`](./examples/refund-resolution-agent-prd.md).
 
----
+## What it is, and isn't
+
+- It **specs and decides**; it does not run a single line of agent code. Use it *with* a
+  framework, not instead of one.
+- It is **best-in-class for its layer** (the reliable-agent spec), not "the most powerful agent
+  repo" — that framing is for builders, and builders are a different category.
+- It is **young** (v0.2). Differentiated by design; unproven by adoption. Issues and PRs welcome.
 
 ## How it's built
 
 - **Shared context:** [`CLAUDE.md`](./CLAUDE.md) — prime directives + per-skill do's & don'ts,
-  inherited by every skill. This is the playbook in one file.
-- **Skills:** [`skills/`](./skills) — 15 lean `SKILL.md` files; each opens with a pointer to
+  inherited by every skill. The playbook in one file.
+- **Skills:** [`skills/`](./skills) — 18 lean `SKILL.md` files; each opens with a pointer to
   `CLAUDE.md` (progressive disclosure keeps context cost low).
 - **Evidence (the moat):** [`references/`](./references)
   - `skill-evidence-map.md` — Orkes reliability / HITL / governance canon
@@ -199,42 +227,42 @@ evaluation section.
   - `book-code.md` — verbatim code recovered from the *Principles* ebook
   - `antigma-lyzr-architecture.md` — Antigma `ante` architecture + Lyzr agent-type taxonomy
 - **Diagrams:** [`docs/diagrams/`](./docs/diagrams) — editable `.excalidraw` sources +
-  `build_diagrams.py` to regenerate them. The README renders them inline as Mermaid so they
-  display on GitHub; open the `.excalidraw` files in [excalidraw.com](https://excalidraw.com)
-  to edit the hand-drawn versions.
+  `build_diagrams.py`. Rendered inline as Mermaid so they display on GitHub.
 
 ```
-agent-builder/
+agent-blueprint/
 ├── CLAUDE.md                  the playbook (prime directives + per-skill do's/don'ts)
 ├── README.md                  you are here
 ├── .claude-plugin/            plugin.json + marketplace.json
 ├── skills/                    18 SKILL.md files (gates, sections, spine)
 ├── references/                the distilled evidence (the moat)
+├── examples/                  a full worked agent PRD
 └── docs/diagrams/             editable Excalidraw sources + generator
 ```
 
 ## Cross-agent
 
-Skills follow the open Agent Skills standard, so the same Markdown also runs in Cursor,
-Copilot, and other agents — not Claude Code only.
+Skills follow the open Agent Skills standard, so the same Markdown also runs in Cursor, Copilot,
+and other agents — not Claude Code only.
 
 ## Freshness
 
-Model IDs and API names in `references/` are a **March-2026 snapshot**. This field moves
-monthly; re-verify before quoting a specific model string in a live PRD. The plugin version
-bumps when the references are refreshed.
+Model IDs and API names in `references/` are a **March-2026 snapshot**. This field moves monthly;
+re-verify before quoting a specific model string in a live PRD. The plugin version bumps when the
+references are refreshed.
 
 ## Status
 
-v0.2 — all 18 skills shipped (added agent-architecture, agent-type, model-gateway from the Antigma + Lyzr research). Roadmap: a worked example PRD, a trigger-accuracy eval, and an
-npm installer for one-command cross-agent install.
+v0.2 — all 18 skills shipped (gates + section-writers + orchestrator + critic). Roadmap: a
+trigger-accuracy eval of the pack itself, hand-drawn diagram PNGs, and an npm installer for
+one-command cross-agent install.
 
 ## Credits
 
-Built by [Mothi Venkatesh](https://github.com/mothivenkatesh). Distilled from the public work
-of **Orkes** (orkes.io/blog) and **Mastra / Sam Bhagwat** (*Principles of Building AI Agents*,
-mastra.ai). All credit for the underlying engineering ideas is theirs; this repo is the
-PM-facing playbook on top.
+Built by [Mothi Venkatesh](https://github.com/mothivenkatesh). Distilled from the public work of
+**Orkes** (orkes.io), **Mastra / Sam Bhagwat** (*Principles of Building AI Agents*, mastra.ai),
+**Antigma** (ante.run), and **Lyzr** (lyzr.ai). The engineering ideas are theirs; this repo is
+the PM-facing playbook on top.
 
 ## License
 

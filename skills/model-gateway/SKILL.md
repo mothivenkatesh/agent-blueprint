@@ -4,7 +4,7 @@ description: >
   Spec the model-access control plane for a production agent. Use when designing provider
   routing, virtual keys with budget caps, BYOK, spend attribution, multi-provider fallback, or
   fail-closed behavior for an agent's LLM access. Augments model-and-cost; writes the "Model
-  access & gateway" section in the agent-builder pack.
+  access & gateway" section in the agent-blueprint pack.
 allowed-tools: Read, Write, Edit
 ---
 

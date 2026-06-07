@@ -3,7 +3,7 @@ name: memory-spec
 description: >
   Decide an agent's memory and context strategy. Use when choosing what an agent should
   remember, picking working memory vs semantic recall (RAG) vs observational memory vs none,
-  designing retention/freshness, or sizing a context window. Writes PRD §5 in the agent-builder pack.
+  designing retention/freshness, or sizing a context window. Writes PRD §5 in the agent-blueprint pack.
 allowed-tools: Read, Write, Edit
 ---
 

@@ -1,6 +1,6 @@
 # Example PRD — Refund Resolution Agent
 
-> A worked example produced with the **agent-builder** playbook, in the 13-section house
+> A worked example produced with the **agent-blueprint** playbook, in the 13-section house
 > style. It exercises every differentiator section (eval, HITL, reliability, learning) on a
 > money-moving use case, which is where reliable-agent design actually bites. Numbers are
 > illustrative. Model strings are a March-2026 snapshot — re-verify.
@@ -187,4 +187,4 @@ auto-approve.**
 
 ---
 
-*Drafted via `/agent-builder:agent-prd`; audit it with `/agent-builder:agent-prd-review`.*
+*Drafted via `/agent-blueprint:agent-prd`; audit it with `/agent-blueprint:agent-prd-review`.*

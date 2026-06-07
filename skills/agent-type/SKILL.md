@@ -5,7 +5,7 @@ description: >
   when naming what kind of agent this is, deciding "is this a reasoning or an operational
   agent", picking a production agent category (research, support, reporting, monitoring, coding,
   data-transformation, etc.), or choosing a multi-agent topology. Writes the "Agent type &
-  topology" section in the agent-builder pack; runs early, feeds eval, cost, and guardrails.
+  topology" section in the agent-blueprint pack; runs early, feeds eval, cost, and guardrails.
 allowed-tools: Read, Write, Edit
 ---
 

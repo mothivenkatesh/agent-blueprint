@@ -4,7 +4,7 @@ description: >
   Specify an agent's tools, integrations, and data access. Use when listing what an agent can
   call, designing tool input/output schemas, deciding MCP vs custom tools, or planning
   read/write access to external systems. "Designing your tools is the most important step."
-  Writes PRD §4 in the agent-builder pack.
+  Writes PRD §4 in the agent-blueprint pack.
 allowed-tools: Read, Write, Edit
 ---
 

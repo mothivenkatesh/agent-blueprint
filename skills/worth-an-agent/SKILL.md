@@ -5,7 +5,7 @@ description: >
   PM is scoping an agentic product, asks "should we build an agent for X", is choosing between
   an agent / a workflow / a script / buying a tool, or is starting an Agentic AI PRD. Ranks
   solutions cheapest-first and kills agent ideas that should be a deterministic workflow.
-  Gate 1 of 3 in the agent-builder pack.
+  Gate 1 of 3 in the agent-blueprint pack.
 allowed-tools: Read, Write, Edit
 ---
 

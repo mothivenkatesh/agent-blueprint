@@ -1,6 +1,6 @@
-# agent-builder — pack operating manual (CLAUDE.md)
+# agent-blueprint — pack operating manual (CLAUDE.md)
 
-This file is the shared context every skill in `agent-builder` inherits. It is the
+This file is the shared context every skill in `agent-blueprint` inherits. It is the
 distilled judgment from reading, end to end: the Orkes Conductor blog (165 posts),
 "Principles of Building AI Agents" 3rd ed (Sam Bhagwat / Mastra, full book), and the
 Mastra blog + agent-memory research (199 posts). Evidence maps live in `references/`.

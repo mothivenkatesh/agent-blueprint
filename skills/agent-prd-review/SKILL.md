@@ -4,7 +4,7 @@ description: >
   Audit an agent / Agentic-AI PRD against the reliability rubric and return a scorecard. Use when
   a PM has a draft agent PRD and wants it reviewed, asks "what's missing from this spec", or wants
   to pressure-test an agent product doc before build. Works on an existing PRD with zero setup —
-  the fastest way to feel the agent-builder pack's value.
+  the fastest way to feel the agent-blueprint pack's value.
 allowed-tools: Read, Write, Edit
 ---
 
